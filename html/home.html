@@ -1,0 +1,50 @@
+<div id="principal" data-role="page">
+	<div data-role="panel" data-display="push" id="sidebar" data-theme="c" data-position-fixed="true">
+	    <h4>Caza Asteroides</h4>
+	    <ul data-role="listview" id="sidelistview" class="ui-listview">
+	        <li data-icon='false'><i class="fa fa-list"></i><a data-fajax="false" href="#" id="nuevo_reto" >Nuevo reto</a></li>
+	        <li data-icon='false'><i class="fa fa-thumbs-up"></i><a data-fajax="false" href="#/cazast-vote">Vota observaciones</a></li>
+	        <li data-icon='false'><i class="fa fa-shield"></i><a data-ajax="false" href="#/premios">Premios</a></li>
+	        <li data-icon='false'><i class="fa fa-book"></i><a data-ajax="false" href="#/televirt">Telescopio Virtual</a></li>
+	        <li data-icon='false'><i class="fa fa-home"></i><a data-ajax="false" href="index.html">Mi cuenta</a></li>
+	        <li data-icon='false'><i class="fa fa-calendar"></i><a data-ajax="false" href="#/reservations">Reservas</a></li>
+	        <li data-icon='false'><i class="fa fa-picture-o"></i><a data-ajax="false" href="#/images">Imagenes</a></li>
+	        <li data-icon='false'><i class="fa fa-user-times"></i><a data-ajax="false" href="#/login" ng-click="login.disconnect()">Cerrar Sesion</a></li>
+	    </ul>
+	</div>
+	<div data-role="header" data-tap-toggle="false" data-theme='b' class="ui-header ui-header-fixed ui-bar-b">
+	    <a href='#sidebar' data-role="none" id="a-sidebar"><img src="images/menu-icon.png" alt="sidebar" id="header-menu-icon" /></a>
+	    <h1 class="header-title">Teleoperacion</h1>
+	</div>
+    <div data-role="content" class="ui-content" style="padding:0">
+    	<div style="height:48px"></div>
+		<div class="jumbotron">
+			<h3>Usuario: {{login.screen_name}}</h3><br>
+		</div>
+		<a type="button" href="#/images" class="luke-button" style="width:100%;margin-top:2px">IMAGENES</a>
+	    <a type="button" href="#/reservations" class="luke-button" style="width:100%;margin-top:2px">RESERVAS</a>
+		<a type="button" class="luke-button" ng-click="tutorials=true" data-toggle="modal" data-target="#alert" style="width:100%;margin-top:2px">TUTORIALES</a>
+	    <a type="button" href="#/login" ng-click="login.disconnect()" class="luke-button" style="width:100%;margin-top:2px">LOGOUT</a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+	<div class="modal-dialog" role="document">
+    	<div ng-if="tutorials" class="modal-content">
+        	<div class="modal-header">
+        		<h2>Tutoriales</h2>
+        	</div>
+	        <div class="modal-body">
+	        	<h3 class="modal-title" id="myModalLabel">Experimento Nocturno:</h3>
+				<iframe class="youtube-player" type="text/html" style="max-width:100%"
+					src="http://www.youtube.com/embed/l8IcB7AD9ws" ng-src="http://www.youtube.com/embed/l8IcB7AD9ws" frameborder="0" allowfullscreen>
+				</iframe><br>
+	        	<h3 class="modal-title" id="myModalLabel">Experimento Solar:</h3>
+				<iframe class="youtube-player" type="text/html" style="max-width:100%"
+					src="http://www.youtube.com/embed/kylY8ofpkJ0" ng-src="http://www.youtube.com/embed/kylY8ofpkJ0" frameborder="0" allowfullscreen>
+				</iframe><br>
+	        </div>
+    	</div>
+    </div>
+</div>

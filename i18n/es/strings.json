@@ -1,0 +1,27 @@
+{
+  "languageSpecifications": [
+    {
+      "wait": "Espere, por favor...",
+      "user_login_txt": "Usuario",
+      "pass_login_txt": "Contraseña",
+      "forgot_button": "He olvidado mi contraeña",
+      "gosignup_button": "Regístrate",
+      "login_button": "Entrar",
+      "nevo_rete_txt": "Nuevo",
+      "header-search-txt":"Encontrado!",
+      "message_sent":"mensaje enviado",
+      "sidemenu_vote":"Votar Observaciones",
+      "sidemenu_premio":"Lista Premios",
+      "sidemenu_teleop":"Telscopio telop.",
+      "sidemenu_televirt1":"Virtual Telesc.",
+      "sidemenu_televirt2":"Virtual Telesc.",
+      "sidemenu_about":"Sobre mí",
+      "sidemenu_exit":"Salir",
+      "vote_yes":"Sí",
+      "username": "Porfavor introduzca su nombre de usuario",
+      "password": "Porfavor introduzca su password",
+      "headingtext": "Login",
+      "submit": "Enviar"
+    }
+  ]
+}

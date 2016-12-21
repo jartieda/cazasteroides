@@ -1,0 +1,68 @@
+<div id="mainpage" data-role="page">
+
+    <div data-role="panel" data-display="push" id="sidebar" data-theme="c">
+        <h4>Cazasteroides</h4>
+        <ul data-role="listview" id="sidelistview" class="ui-listview">
+            <!--<li data-icon='false'><i class="fa fa-list"></i><a data-fajax="false" href="#" id="nuevo_reto" >Nuevo reto</a></li>-->
+            <li data-icon='false'><i class="fa fa-thumbs-up"></i><a id="sidemenu_vote" data-fajax="false" href="#/cazast-vote" class="languagespecificHTML">Vota observaciones</a></li>
+            <li data-icon='false'><i class="fa fa-shield"></i><a id="sidemenu_premio" data-ajax="false" href="#/premios" class="languagespecificHTML">Premios</a></li>
+            <li id="teleop" data-icon='false'><i class="fa fa-calendar"></i><a id="sidemenu_teleop" data-ajax="false" href="#/login" class="languagespecificHTML">Teleoperacion</a></li>
+            <li id="tv_link" data-icon='false'><i class="fa fa-book"></i><a id="sidemenu_televirt1" data-ajax="false" href="#/televirt" class="languagespecificHTML">Telescopio Virtual1</a></li>
+            <li id="tv_link2" data-icon='false'><i class="fa fa-book"></i><a id="sidemenu_televirt2" data-ajax="false" href="#/televirt2" class="languagespecificHTML">Telescopio Virtual</a></li>
+            <li id="review_link" data-icon='false'><i class="fa fa-book"></i><a id="sidemenu_review" data-ajax="false" href="#/review" class="languagespecificHTML">Revisión</a></li>
+            <li id="fields_link2" data-icon='false'><i class="fa fa-book"></i><a id="sidemenu_campos" data-ajax="false" href="#/fields" class="languagespecificHTML">Selec. Campos</a></li>
+            <li data-icon='false'><i class="fa fa-home"></i>
+              <a id="sidemenu_about" data-ajax="false" href="#/cazast-me" class="languagespecificHTML">Mi cuenta</a></li>
+            <li data-icon='false'><i class="fa fa-home"></i>
+              <a id="sidemenu_exit" data-ajax="false" href="#/cazast-login" class="languagespecificHTML">Salir</a></li>
+        </ul>
+    </div>
+    <!-- fin panel -->
+    <div data-role="header" data-tap-toggle="false" data-theme='b' class="ui-header ui-bar-b">
+        <a href='#sidebar' data-role="none" id="a-sidebar"><img src="images/menu-icon.png" alt="sidebar" id="header-menu-icon" /></a>
+        <h1 class="header-title">Cazasteroides</h1>
+        <span style="margin: 15px 0px 0px;width: 200px;position: absolute;right: 0px;top: 0px;">
+          <div style="display: inline-block; padding: 2px 4px; margin: 0px 0px 5px; border: 1px solid rgb(204, 204, 204); text-align: center; background-color: rgb(255, 255, 255);position: absolute;right: 10px;">
+            <div id="clock" style="text-decoration: none; font-size: 13px; color: rgb(0, 0, 0);"> </div>
+          </div>
+      </span>
+    </div>
+
+    <div data-role="content">
+        <div id="animation_container" class="item">
+          <div class="magnify">
+          <img id="animation2" class="zoom" src="assets/2.jpg" data-magnify-src="assets/2.jpg" alt="Responsive" style="position: absolute;bottom: 0px;left: 0px ;width:unset; visibility: hidden;"/>
+          <img id="animation"  src="assets/2.jpg" alt="Responsive" style="width:unset"/>
+          </div>
+            <div id="draggable" style="top: 5px;right: 5px; z-index: 1000;pointer-events: none;">
+                <img src="images/target.svg" height="50px" width="50px" alt="Kiwi standing on oval" />
+            </div>
+            <svg id="histo" height=100px width=296px style="position: absolute;bottom: 5px;left: 5px">
+                <!-- this is filled by snap.svg -->
+            </svg>
+            <div id="coord_div" style="position: absolute;top: 5px;left: 5px;background-color: white;padding: 5px;opacity: 0.5;">
+
+            </div>
+
+            <div style="left: 10px;top: 100px;display: block;position: absolute;background: rgba(255,255,255,0.4);padding: 10px;" id="infowindow">
+
+            </div>
+            <div style="right: 10px;bottom: 60px; width:150px; display: block;position: absolute;background: rgba(255,255,255,0.4);padding: 10px;" id="nuevo_reto_button">
+              <a href='#' data-role="none" id="nuevo_reto" style="color: white;">
+                <span id="nevo_rete_txt" class="languagespecificHTML">Nuevo</span>
+                <span id="nuevo_reto_icon" class="fa fa-refresh" style="color: rgba(255,255,255,1);"></span>
+              </a>
+            </div>
+            <div style="right: 10px;bottom: 10px; width:150px; display: block;position: absolute;background: rgba(255,255,255,0.4);padding: 10px;" id="search_button">
+              <a href='#/cazast-main' data-role="none" id="star-search" style="color: white;">
+                <span id="header-search-txt" class="languagespecificHTML">Check&nbsp;</span>
+                <span id="header-search-icon" class="fa fa-send" style="color: rgba(255,255,255,1);"></span>
+              </a>
+            </div>
+        </div>
+    </div>
+<!--    <div data-role="footer" data-theme="none" data-border="false" data-inner="true">
+        <p>Cazasteroides 2016<span class="float-right">All rights reserved.</span></p>
+    </div>-->
+
+</div>

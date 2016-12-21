@@ -1,0 +1,26 @@
+{
+  "languageSpecifications": [
+      {
+        "wait": "Please wait...",
+        "fieds_header":"select active fields",
+        "fields_update":"Save",
+        "message_sent":"Message Sent",
+        "user_login_txt": "User",
+        "pass_login_txt": "Password",
+        "nevo_rete_txt":"New",
+        "header-search-txt":"Got One!",
+        "sidemenu_vote":"Vote observations",
+        "sidemenu_premio":"Ranking list",
+        "sidemenu_teleop":"Telscope telop.",
+        "sidemenu_televirt1":"Virtual Telesc.",
+        "sidemenu_televirt2":"Virtual Telesc.",
+        "sidemenu_review":"Review",
+        "sidemenu_about":"About me",
+        "sidemenu_exit":"Exit",
+          "username": "Please Enter your user name",
+          "password": "Please enter your password",
+          "headingtext": "Please Fill Details",
+          "submit": "Go"
+      }
+  ]
+}

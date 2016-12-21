@@ -1,0 +1,416 @@
+<div id="principal" data-role="page">
+	<div data-role="panel" data-display="push" id="sidebar" data-theme="c" data-position-fixed="true">
+	    <h4>Caza Asteroides</h4>
+	    <ul data-role="listview" id="sidelistview" class="ui-listview">
+	        <li data-icon='false'><i class="fa fa-list"></i><a data-fajax="false" href="#" id="nuevo_reto" >Nuevo reto</a></li>
+	        <li data-icon='false'><i class="fa fa-thumbs-up"></i><a data-fajax="false" href="#/cazast-vote">Vota observaciones</a></li>
+	        <li data-icon='false'><i class="fa fa-shield"></i><a data-ajax="false" href="#/premios">Premios</a></li>
+	        <li data-icon='false'><i class="fa fa-book"></i><a data-ajax="false" href="#/televirt">Telescopio Virtual</a></li>
+	        <li data-icon='false'><i class="fa fa-home"></i><a data-ajax="false" href="index.html">Mi cuenta</a></li>
+	        <li data-icon='false'><i class="fa fa-home"></i><a data-ajax="false" href="#/home">Inicio</a></li>
+	        <li data-icon='false'><i class="fa fa-calendar"></i><a data-ajax="false" href="#/reservations">Reservas</a></li>
+	        <li data-icon='false'><i class="fa fa-picture-o"></i><a data-ajax="false" href="#/images">Imagenes</a></li>
+	        <li data-icon='false'><i class="fa fa-user-times"></i><a data-ajax="false" href="#/login" ng-click="login.disconnect()">Cerrar Sesion</a></li>
+	    </ul>
+	</div>
+	
+	<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b' class="ui-header ui-header-fixed ui-bar-b">
+	    <a href='#sidebar' data-role="none" id="a-sidebar"><img src="images/menu-icon.png" alt="sidebar" id="header-menu-icon" /></a>
+		<a class="navbar-brand fa fa-cogs" id="navbar-left-button" data-toggle="modal" data-target="#tools"></a>
+		<a ng-hide="experiment.images==true" class="navbar-brand fa fa-info-circle" id="navbar-right-button" ng-click="getReservationInformation()" data-toggle="modal" data-target="#alert"></a>
+		<a ng-hide="experiment.images==true" class="navbar-brand animate-show fa fa-picture-o" id="navbar-right-button" ng-click="experiment.images=true"></a>
+		<a ng-show="experiment.images==true" class="navbar-brand animate-show" id="navbar-right-button" role="button" ng-click="loadMyImages()">
+			<img ng-src="img/loading.png" style="width:22px;padding-top:1px;-webkit-filter:invert(100%)">
+		</a>
+		<a ng-show="experiment.images==true" class="navbar-brand animate-show fa fa-camera" id="navbar-right-button" ng-click="experiment.images=false"></a>
+	    <h1 class="header-title">Teleoperacion</h1>
+	</div>
+	
+    <div class="ui-content" style="padding:0" ng-hide="experiment.images==true">
+		<div style="height:48px"></div>
+		<div class="progress">
+			<div ng-show="experiment.remainingtime>=40" class="progress-bar" role="progressbar" aria-valuenow="{{experiment.remainingtime}}" aria-valuemin="0" aria-valuemax="100" style="width: {{experiment.remainingtime}}%;">
+		    	<span class="sr-only"></span>
+		  	</div>
+			<div ng-show="experiment.remainingtime<40 && experiment.remainingtime>=10" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{experiment.remainingtime}}" aria-valuemin="0" aria-valuemax="100" style="width: {{experiment.remainingtime}}%;">
+		    	<span class="sr-only"></span>
+		  	</div>
+			<div ng-show="experiment.remainingtime<10" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{experiment.remainingtime}}" aria-valuemin="0" aria-valuemax="100" style="width: {{experiment.remainingtime}}%;">
+		    	<span class="sr-only"></span>
+		  	</div>
+		</div>
+			
+		<div>
+			<nav id="experiment-nav">
+				<ul class="animate-show" style="margin:0 2.5%;padding:0;max-width:95%;">
+					<li ng-switch on="scam0_url==undefined" style="display:inline-block;max-width:30%;float:left">
+						<img ng-src="img/wn4.gif" ng-switch-when="true" style="max-width:100%">
+						<div ng-switch-when="false" id="scam-show" class="btn" data-toggle="buttons" style="padding:0">
+						    <input type="checkbox" autocomplete="off" style="display:none">
+						    <img ng-src="{{scam0_url}}" fallback-src="img/wn4.gif" style="width:100%">
+						</div>
+					</li>
+					<li ng-switch on="scam1_url==undefined" style="display:inline-block;max-width:30%;float:left">
+						<img ng-src="img/wn4.gif" ng-switch-when="true" style="max-width:100%">
+						<div ng-switch-when="false" id="scam-show" class="btn" data-toggle="buttons" style="padding:0">
+						    <input type="checkbox" autocomplete="off" style="display:none">
+						    <img ng-src="{{scam1_url}}" fallback-src="img/wn4.gif" style="width:100%">
+						</div>
+					</li>
+					<li ng-switch on="hasMove" style="display:inline-block;float:right">
+						<div ng-switch-when="true" style="border-radius:50%;background-color:black;padding:5px">
+							<a style="display:block;color:orange;padding-bottom:3px;line-height:0"><img ng-click="move_north()" ng-src="img/up.png" style="width:30px"></a>
+							<a style="display:inline-block;padding-right:16px;color:orange"><img ng-click="move_west()" ng-src="img/left.png" style="height:30px"></a>
+							<a style="display:inline-block;padding-left:16px;color:orange"><img ng-click="move_east()" ng-src="img/right.png" style="height:30px"></a>
+							<a style="display:block;line-height:0;color:orange;padding-top:3px"><img ng-click="move_south()" ng-src="img/down.png" style="width:30px"></a>
+						</div>
+						<div ng-switch-when="false" style="border-radius:50%;background-color:black;padding:5px">
+							<a style="display:block;color:orange;padding-bottom:3px;line-height:0"><img ng-click="move_north()" ng-src="img/up.png" style="width:30px;opacity:0.5"></a>
+							<a style="display:inline-block;padding-right:16px;color:orange"><img ng-click="move_west()" ng-src="img/left.png" style="height:30px;opacity:0.5"></a>
+							<a style="display:inline-block;padding-left:16px;color:orange"><img ng-click="move_east()" ng-src="img/right.png" style="height:30px;opacity:0.5"></a>
+							<a style="display:block;line-height:0;color:orange;padding-top:3px"><img ng-click="move_south()" ng-src="img/down.png" style="width:30px;opacity:0.5"></a>
+						</div>
+			   		</li>
+				</ul>
+			</nav>
+			<div id="carousel" class="carousel slide animate-show" data-ride="carousel" style="max-width:95%;margin:2.5%">
+			  	<!-- Wrapper for slides -->
+			  	<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<img id="image_0" src="img/nebulosa_tarantula.jpeg" style="width:100%">
+					</div>
+		  		</div>
+		
+		  		<!-- Controls -->
+				<div class="animate-show">
+			  		<a class="left carousel-control" data-slide="prev" style="font-size:200%">
+			    		<img ng-src="img/plus.png" ng-click="setExposureTimeValue(1.0)" style="position:absolute;left:16%;top:3%;margin:6px 8px">
+			    		<span id="exposureBar" class="carousel_icon" style="left:16%;top:14%;bottom:14%;width:12px;margin:15px;background-color:white;opacity:0.5"></span>
+			    		<img ng-src="img/minus.png" ng-click="setExposureTimeValue(-1.0)" style="position:absolute;left:16%;top:90%;margin-left:8px">
+			    		<span class="sr-only">Previous</span>
+			    		<span class="carousel_icon" ng-show="ccds.exposure.value!=null" ng-style="{'top':exposuretop+'px'};" style="left:16%;margin-top:-40px">
+			    			<img ng-src="img/exposure.png" width="40px" style="margin-left:1px">
+			    		</span>
+						<input type="range" ng-model="ccds.exposure.value" min="{{ccds.exposure.min[ccd_order]}}" max="{{ccds.exposure.max[ccd_order]}}" step="0.001" ng-change="exposureChange(ccds.exposure.value)" 
+							ng-style="{'width':exposureBarStyle+'px','left':-exposureBarStyle+'px'}" style="position:absolute;transform:rotate(270deg);height:100%;opacity:0;z-index:5" />
+			  		</a>
+			  		<a class="right carousel-control" data-slide="next" style="font-size:200%">
+			    		<img ng-src="img/plus.png" ng-click="setFocuserPositionValue(1.0)" style="position:absolute;right:16%;top:3%;margin:6px 8px">
+			    		<span id="focuserBar" class="carousel_icon" style="right:16%;top:14%;bottom:14%;width:12px;margin:15px;background-color:white;opacity:0.5"></span>
+			    		<img ng-src="img/minus.png" ng-click="setFocuserPositionValue(-1.0)" style="position:absolute;right:16%;top:90%;margin-right:8px">
+			    		<span class="sr-only">Next</span>
+			    		<span class="carousel_icon" ng-style="{'top':focusertop+'px'};" style="right:16%;margin-top:-40px">
+			    			<img ng-show="ccds.focuser.value!=null" ng-src="img/focus.png" width="40px" style="margin-right:1px">
+			    		</span>
+						<input type="range" ng-model="ccds.focuser.value" min="{{ccds.focuser.min[ccd_order]}}" max="{{ccds.focuser.max[ccd_order]}}" step="1" ng-change="focuserChange(ccds.focuser.value)" 
+							ng-style="{'width':focuserBarStyle+'px','left':focuserBarPosition+'px'}" style="position:absolute;transform:rotate(270deg);height:100%;opacity:0;z-index:5" />
+			  		</a>
+				</div>
+			</div>
+			<div style="width:100%;display:inline-block">
+				<ul style="padding:0;width:100%;display:inline-block">
+					<li style="display:inline-block;float:left;margin:2.5%">
+						<img ng-src="img/exposure.png" style="padding:5px;background-color:black;border-radius:20%;width:40px;">
+						<span ng-show="ccds.exposure.value!=null" style="font-size: 125%;"> {{ccds.exposure.value|number:3}} s</span>
+					</li>
+					<li style="display:inline-block;float:right;margin:2.5%">
+						<span ng-show="ccds.focuser.value!=null" style="font-size: 125%">{{ccds.focuser.value-1000|number:0}} steps </span>
+						<img ng-src="img/focus.png" style="padding:5px;background-color:black;border-radius:20%;width:40px;">
+					</li>
+				</ul>
+			</div>
+			<div style="max-width:95%;margin:2.5%"> <!-- ng-show="ccds.gain.value!=null" -->
+				<ul style="padding:0;width:100%;display:inline-block;background-color:black;border-radius:7px">
+					<li style="display: inline-block;float:left"><h4 style="color:white;padding:2px 0 0 6px">Gain</li>
+					<li style="display: inline-block;width:50%">
+						<input type="range" id="slider" ng-model="ccds.gain.value" min="{{ccds.gain.min[ccd_order]}}" max="{{ccds.gain.max[ccd_order]}}" step="1">
+					</li>
+					<li style="display: inline-block;float:right;width:60px"><h4 style="color:white;padding-top:2px">{{ccds.gain.value}}</li>
+				</ul>
+			</div>
+			<div ng-show="hasFilterWheel[ccd_order]">
+			    <select class="form-control" ng-model="filter" ng-change="set_filter()" ng-options="item for item in filters_0">
+			    </select>
+		    </div>
+			<div style="width:100%">
+				<div ng-switch on="isExposing">
+					<div ng-switch-when="false">
+						<img ng-click="expose()" ng-src="img/take.png" style="padding:8px;background-color:black;border-radius:20%;height:70px">
+					</div>
+					<div ng-switch-when="true">
+						<img ng-src="img/take.png" style="padding:8px;background-color:black;border-radius:20%;height:70px;opacity:0.3">
+						<span style="position:absolute"><img class="animate-loading" ng-src="img/loading.png" style="position:absolute;width:42px;top:14px;left:-63px"></span>
+					</div>
+				</div>
+				<div ng-show="ccd_alarm==true">Error al tomar imagen</div>
+				
+				<div ng-show="hasVideoMode[ccd_order]" ng-switch on="isExposing">
+					<div ng-switch-when="false">
+						<img ng-show="!isVideo" ng-click="video()" ng-src="img/video.png" style="padding:8px;background-color:black;border-radius:20%;height:70px">
+						<img ng-show="isVideo" ng-src="img/video.png" style="padding:8px;background-color:black;border-radius:20%;height:70px;opacity:0.3">
+						<span ng-show="isVideo" style="position:absolute"><img class="animate-loading" ng-src="img/loading.png" style="position:absolute;width:42px;top:14px;left:-56px"></span>
+					</div>
+					<div ng-switch-when="true">
+						<img ng-src="img/video.png" style="padding:8px;background-color:black;border-radius:20%;height:70px;opacity:0.3">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <div ng-show="skymap_catalog==true" style="position:fixed;top:0;width:100%;height:100%;padding:0;background-color:white;z-index:999">
+		<div style="height:48px"></div>
+		<div ng-click="skymap_catalog=false" style="display:list-item;padding:10px;font-size:125%">
+			<span style="float:left">Cerrar SKYMAP</span>
+			<span class="fa fa-times-circle-o" style="float:right;font-size:175%;margin-top:-5px"></span>
+		</div>
+		<iframe src="http://www.fourmilab.ch/cgi-bin/Yoursky?date=0&utc=1998%2F02%2F06+12%3A42%3A40&jd=2450851.02963&lat=28.298566&ns=North&lon=16.50949&ew=West&moonp=on&deep=on&deepm=6.5&consto=on&constn=on&limag=5.5&starnm=2.0&starbm=2.5&imgsize=900&fontscale=1.0&scheme=3&elements="
+			 class="animate-show" width="100%" height="100%" frameborder="0">
+		</iframe>
+	</div>
+
+    <div class="ui-content" style="padding:0" ng-show="experiment.images==true">
+		<div style="height:48px"></div>
+		<div class="progress">
+			<div ng-show="experiment.remainingtime>=40" class="progress-bar" role="progressbar" aria-valuenow="{{experiment.remainingtime}}" aria-valuemin="0" aria-valuemax="100" style="width: {{experiment.remainingtime}}%;">
+		    	<span class="sr-only"></span>
+		  	</div>
+			<div ng-show="experiment.remainingtime<40 && experiment.remainingtime>=10" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{experiment.remainingtime}}" aria-valuemin="0" aria-valuemax="100" style="width: {{experiment.remainingtime}}%;">
+		    	<span class="sr-only"></span>
+		  	</div>
+			<div ng-show="experiment.remainingtime<10" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{experiment.remainingtime}}" aria-valuemin="0" aria-valuemax="100" style="width: {{experiment.remainingtime}}%;">
+		    	<span class="sr-only"></span>
+		  	</div>
+		</div>
+		<h3>Imagenes</h3>
+		<div id="experiment_images">
+			<div id="carousel" class="carousel slide" data-ride="carousel" style="background-color: black;">
+			  	<!-- Wrapper for slides -->
+			  	<div class="carousel-inner" role="listbox" ng-repeat="imagen in imagenes" ng-show="$index==images.count">
+			    	<div class="item active">
+			      		<img class="animate-show" src="{{imagen.jpg}}">
+		    		</div>
+		  		</div>
+		  	<!-- Controls -->
+				<div ng-show="images.total>1">
+			  		<a class="left carousel-control" ng-click="images.counter(false)" role="button" data-slide="prev">
+			    		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			    		<span class="sr-only">Previous</span>
+			  		</a>
+			  		<a class="right carousel-control" ng-click="images.counter(true)" role="button" data-slide="next">
+			    		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			    		<span class="sr-only">Next</span>
+			  		</a>
+					<span id="counter" class="navbar-brand">{{images.count+1}} / {{images.total}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="jumbotron center-position" id="notfound_image">
+			<h3>No se encontr&oacute; ninguna imagen</h3><br>
+		</div>
+		<div class="center-position" id="loading_image">
+			<span id="loader"><img class="animate-loading" ng-src="img/loading.png"></span>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+    	<div ng-show="experiment.info==true" class="modal-content">
+        	<div class="modal-header">
+				<h3>Detalles del experimento</h3>
+        	</div>
+	        <div class="modal-body" style="font-size:125%">
+				<table id="info-table">
+					<tbody>
+						<tr>
+							<td>Experimento:</td>
+							<th>{{experiment.data.experiment}}</th>
+						</tr>
+						<tr>
+							<td>Telescopio:</td>
+							<th>{{experiment.data.telescopes[0]}}</th>
+						</tr>
+						<tr>
+							<td>Fecha:</td>
+							<th>{{experiment.data.timeSlot.begin|date:'dd / MM / yyyy'}}</th>
+						</tr>
+						<tr>
+							<td>Horario:</td>
+							<th>De {{experiment.data.timeSlot.begin|date:'HH:mm'}} ({{experiment.data.timeSlot.begin|date:'HH:mm':'UT'}} UT)</th>
+						</tr>
+						<tr>
+							<td></td>
+							<th>a {{experiment.data.timeSlot.end|date:'HH:mm'}} ({{experiment.data.timeSlot.end|date:'HH:mm':'UT'}} UT)</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	        <div class="modal-footer">
+				<h3 style="text-align:center">Tiempo atmosf&eacute;rico</h3>
+		        <ul ng-show="valuesLoaded" style="display: inline-block;width:100%;margin:0;padding:0">
+		        	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%"><img ng-src="img/drop.png" 
+		        		style="padding:5px;background-color:black;border-radius:20%;width:40px;"><br>{{rh.value}}% RH</div>
+		        	</li>
+		        	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%"><img ng-src="img/sun-icon.png" 
+		        		style="padding:3px;background-color:black;border-radius:20%;width:40px;"><br>{{temperature.value}} Deg</div>
+		        	</li>
+		        	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%"><img ng-src="img/wind.png" 
+		        		style="padding:3px;background-color:black;border-radius:20%;width:40px;"><br>{{wind.value}} m/s</div>
+		        	</li>
+	        	</ul>
+	        </div>
+	        <div class="modal-footer">
+	        	<a type="button" class="luke-button" data-dismiss="modal">Aceptar</a>
+	        </div>
+    	</div>
+    	<div ng-show="experiment.reservationEnd==true" class="modal-content">
+        	<div class="modal-header">
+        	</div>
+	        <div class="modal-body">
+	        	<h2 class="modal-title" id="myModalLabel">Experimento finalizado</h2>
+	        </div>
+	        <div class="modal-footer">
+	        </div>
+    	</div>
+    </div>
+</div>
+<div class="modal fade" id="tools" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+        	<div class="modal-header">
+				<h3>Herramientas de b&uacute;squeda</h3>
+        	</div>
+	        <div class="modal-body">
+	        	<div style="font-size:125%"><b>Selector de objetivo:</b></div>
+	        	<br>
+			    <div class="input-group input-group-lg">
+			    	<span class="input-group-addon" data-toggle="collapse" data-target="#collapseTarget" style="padding: 5px;background-color: black;border-radius: 6px;">
+			    		<img ng-src="img/catalog.png" style="width:40px">
+			    	</span>
+				    <input class="form-control" placeholder="TARGET" ng-model="target_selected"/>
+			    </div>
+				<div class="collapse" id="collapseTarget">
+					<div class="well">
+						<div style="font-size:125%"><b>CATALOG</b></div>
+					    <ul style="display: inline-block;width:100%;margin:0;padding:0">
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/mercury.jpg" ng-click="target_selected='mercury'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Mercury</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/venus.jpg" ng-click="target_selected='venus'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Venus</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/mars.jpg" ng-click="target_selected='mars'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Mars</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/jupiter.jpg" ng-click="target_selected='jupiter'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Jupiter</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/saturn.jpg" ng-click="target_selected='saturn'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Saturn</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/neptune.jpg" ng-click="target_selected='neptune'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Neptune</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/uranus.jpg" ng-click="target_selected='uranus'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Uranus</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/moon.jpg" ng-click="target_selected='moon'" data-toggle="collapse" data-target="#collapseTarget"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>Moon</div>
+						 	</li>
+						 	<li style="display: inline-block;width: 32%"><div style="text-align:center;font-size:125%">
+						 		<img ng-src="img/catalog/skymap.jpg" ng-click="skymap_catalog=true" data-toggle="collapse" data-target="#collapseTarget" data-dismiss="modal"
+						 		style="padding:5px;background-color:black;border-radius:20%;width:100%;max-width:100px;"><br>SKYMAP</div>
+					    	</li>
+					   	</ul>
+					</div>
+				</div>
+				<hr size='5' width="80%">
+				<div>
+					<div style="font-size:125%"><b>Selector de coordenadas:</b></div>
+					<br>
+					<table id="experiment-coordinates">
+						<tbody id="experiment-coordinates_info">
+							<tr>
+								<td rowspan="2">Coordinates</td>
+								<th>{{rah}}</th>
+								<td>:</td>
+								<th>{{ram}}</th>
+								<td>:</td>
+								<th>{{ras}}</th>
+								<td rowspan="2"><img ng-src="img/compass.png" data-toggle="collapse" data-target="#collapseCoordinates" style="padding:5px;background-color:black;border-radius:20%;width:40px;"></td>
+							</tr>
+							<tr>
+								<th>{{decg}}</th>
+								<td>:</td>
+								<th>{{decm}}</th>
+								<td>:</td>
+								<th>{{decs}}</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="collapse" id="collapseCoordinates">
+					<div class="well">
+						<h5 style="text-align:left">
+							<b>Enter the target coordinates in J2000:</b><br>
+							<span style="padding-left:2em;display:inline-block"><i>Right Ascension:</i> Ranging from 00:00:00 to 23:59:59.9</span><br>
+							<span style="padding-left:2em;display:inline-block"><i>Declination:</i> Ranging from -90:00:00 to 90:00:00</span>
+						</h5>
+						<table id="experiment-coordinates">
+							<tbody id="experiment-coordinates_sel">
+								<tr>
+									<td>Right Ascension:</td>
+									<th><input type="number" ng-model="rah_sel" ng-blur="rah_sel=coordinateChange(rah_sel,ra_limits[0][0],ra_limits[1][0])">h</th>
+									<th><input type="number" ng-model="ram_sel" ng-blur="ram_sel=coordinateChange(ram_sel,ra_limits[0][1],ra_limits[1][1])">m</th>
+									<th><input type="number" ng-model="ras_sel" ng-blur="ras_sel=coordinateChange(ras_sel,ra_limits[0][2],ra_limits[1][2])">s</th>
+								</tr>
+								<tr>
+									<td>Declination:</td> 
+									<th><input type="number" ng-model="decg_sel" ng-blur="decg_sel=coordinateChange(decg_sel,dec_limits[0][0],dec_limits[1][0])">&deg;</th>
+									<th><input type="number" ng-model="decm_sel" ng-blur="decm_sel=coordinateChange(decm_sel,dec_limits[0][1],dec_limits[1][1])">&#39;</th>
+									<th><input type="number" ng-model="decs_sel" ng-blur="decs_sel=coordinateChange(decs_sel,dec_limits[0][2],dec_limits[1][2])">&quot;</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<hr size='5' width="80%">
+				<div style="width:100%">
+					<div style="font-size:125%"><b>Selector de c&aacute;mara:</b></div>
+					<br>
+					<div>
+						<span ng-switch on="hasCcd[1]" style="height: 40px;display: inline-block;padding-top: 6px;background-color: black;border-radius: 6px;width: 40px;">
+							<img ng-src="img/eye.png" ng-switch-when="true" ng-click="setOrder()" style="width:inherit;height:28px">
+							<img ng-src="img/eye.png" ng-switch-when="false" style="width:inherit;height:28px;opacity:0.3">
+						</span>
+						<span ng-show="ccd_order!=null" style="font-size: 125%;"> C&aacute;mara {{ccd_order+1}}</span>
+					</div>
+				</div>
+			</div>
+	        <div class="modal-footer">
+	        	<a type="button" class="luke-button" data-dismiss="modal" style="float:left;margin-top:3px">Volver</a>
+				<span ng-switch on="hasTargetPoint" style="float:right;margin:2.5%">
+					<span ng-switch-when="true">
+						<span style="font-size: 125%">Apuntar </span>
+						<img ng-src="img/telescope.png" ng-click="go()" style="padding:4px 3px 4px 5px;background-color:black;border-radius:20%;width:40px;margin-top:-4px">
+					</span>
+					<span ng-switch-when="false">
+						<span style="font-size: 125%">Apuntando... </span>
+						<img ng-src="img/telescope.png" style="padding:4px 3px 4px 5px;background-color:black;border-radius:20%;width:40px;opacity:0.3;margin-top:-4px">
+					</span>
+				</span>
+	        </div>
+    	</div>
+    </div>
+</div>

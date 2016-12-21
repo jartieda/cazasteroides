@@ -1,0 +1,97 @@
+<div id="principal" data-role="page">
+	<div data-role="panel" data-display="push" id="sidebar" data-theme="c" data-position-fixed="true">
+	    <h4>Caza Asteroides</h4>
+	    <ul data-role="listview" id="sidelistview" class="ui-listview">
+	        <li data-icon='false'><i class="fa fa-list"></i><a data-fajax="false" href="#" id="nuevo_reto" >Nuevo reto</a></li>
+	        <li data-icon='false'><i class="fa fa-thumbs-up"></i><a data-fajax="false" href="#/cazast-vote">Vota observaciones</a></li>
+	        <li data-icon='false'><i class="fa fa-shield"></i><a data-ajax="false" href="#/premios">Premios</a></li>
+	        <li data-icon='false'><i class="fa fa-book"></i><a data-ajax="false" href="#/televirt">Telescopio Virtual</a></li>
+	        <li data-icon='false'><i class="fa fa-home"></i><a data-ajax="false" href="index.html">Mi cuenta</a></li>
+	        <li data-icon='false'><i class="fa fa-home"></i><a data-ajax="false" href="#/home">Inicio</a></li>
+	        <li data-icon='false'><i class="fa fa-calendar"></i><a data-ajax="false" href="#/reservations">Reservas</a></li>
+	        <li data-icon='false'><i class="fa fa-picture-o"></i><a data-ajax="false" href="#/images">Imagenes</a></li>
+	        <li data-icon='false'><i class="fa fa-user-times"></i><a data-ajax="false" href="#/login" ng-click="login.disconnect()">Cerrar Sesion</a></li>
+	    </ul>
+	</div>
+	
+	<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b' class="ui-header ui-header-fixed ui-bar-b">
+	    <a href='#sidebar' data-role="none" id="a-sidebar"><img src="images/menu-icon.png" alt="sidebar" id="header-menu-icon" /></a>
+	    <h1 class="header-title">Teleoperacion</h1>
+	</div>
+	
+    <div data-role="content" class="ui-content" style="padding:0">
+		<div style="height:48px"></div>
+		<button type="button" class="luke-button fa fa-random" ng-click="images.random()" style="width:33%;float:left;margin:0;font-size:60px;padding:3% 12px"><i class="fa fa-users" style="display:inline-block;position:absolute;left:2px;bottom:2px;font-size:30px;color:darkgrey"></i></button>
+		<button type="button" class="luke-button fa fa-calendar" data-toggle="modal" data-target="#datepicker-collapse" aria-expanded="false" style="width:34%;margin:0;font-size:60px;padding:3% 12px"><i class="fa fa-users" style="display:inline-block;position:absolute;left:2px;bottom:2px;font-size:30px;color:darkgrey"></i></button>
+		<button type="button" class="luke-button fa fa-random" ng-click="images.myRandom()" style="width:33%;float:right;margin:0;font-size:60px;padding:3% 12px"><i class="fa fa-user" style="display:inline-block;position:absolute;left:2px;bottom:2px;font-size:30px;color:darkgrey"></i></button>
+		
+		<div class="animate-show" id="final_image">
+			<img id="current_image" src="{{imagenes[images.count].jpg}}" class="img-thumbnail animate-show center-position" ng-click="images.fullscreen=true"><br>
+			<div ng-if="images.total>1" style="height:50px"></div>
+			<nav ng-if="images.total>1" class="navbar navbar-default navbar-fixed-bottom">
+				<a class="navbar-brand" id="navbar-left-button" type="button" ng-click="images.counter(false)" style="color:initial;margin-left:0"><span aria-hidden="true">&larr;</span> Anterior</a>
+				<a class="navbar-brand" id="navbar-right-button" type="button" ng-click="images.counter(true)" style="color:initial">Siguiente <span aria-hidden="true">&rarr;</span></a>
+				<span id="counter" class="navbar-brand">{{images.count+1}} / {{images.total}}</span>
+			</nav>
+		</div>
+		<div class="jumbotron animate-show center-position" id="notfound_image">
+			<h3>No se encontr&oacute; ninguna imagen</h3><br>
+		</div>
+		<div class="animate-show center-position" id="non_image">
+			<img ng-src="img/GLORIA.png" style="max-width:70%">
+		</div>
+		<div class="center-position" id="loading_image">
+			<span id="loader"><img class="animate-loading" ng-src="img/loading.png"></span>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="datepicker-collapse">
+	<div class="modal-dialog">
+	    <div style="display:inline-block;max-width:100%">
+	        <uib-datepicker style="max-width:100%" ng-model="images.date" class="well well-sm" datepicker-options="date_options"></uib-datepicker>
+	    </div>
+  	</div>
+</div>
+<div id="capa">
+</div>
+<div id="full_images" ng-if="images.fullscreen==true">
+	<div id="carousel" class="carousel slide" data-ride="carousel" style="position:static">
+
+	  	<!-- Wrapper for slides -->
+	  	<div class="carousel-inner" id="fullscreen" role="listbox" ng-repeat="imagen in imagenes" ng-show="$index==images.fullscreencount">
+	  		<div id="fullimage_title">
+	  			<h3>Imagen del {{imagen.rt}}</h3>
+	  		</div>
+	    	<div class="item active" id="fullimage_data">
+	      		<img ng-if="images.total<=1" id="fullscreenimage" ng-src="{{imagen.jpg}}" onload="$('#carousel').show();$('#loading_fullimage').hide();">
+	      		<img ng-if="images.total>1" id="fullscreenimage" ng-src="{{imagen.jpg}}" fallback-src="img/GLORIA.png" onload="$('#carousel').show();$('#loading_fullimage').hide();">
+		      	<div class="carousel-caption" style="position: initial;">
+		      		<h3>{{imagen.target.object}}</h3>
+		      		<h3>{{imagen.creationDate|date:'dd / MM / yyyy'}}</h3>
+		      	</div>
+    		</div>
+  		</div>
+
+  	<!-- Controls -->
+		<div ng-show="images.total>1">
+	  		<a class="left carousel-control" ng-click="images.counter('fullfalse')" role="button" data-slide="prev">
+	    		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    		<span class="sr-only">Previous</span>
+	  		</a>
+	  		<a class="right carousel-control" ng-click="images.counter('fulltrue')" role="button" data-slide="next">
+	    		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    		<span class="sr-only">Next</span>
+	  		</a>
+		</div>
+	</div>
+	<nav id="fullimage_button">
+		<ul style="padding:0 1%">
+			<li style="float:left"><button type="button" class="luke-button" ng-click="images.fullscreen=null" onclick="$('img:not(#current_image,#header-menu-icon,.animate-loading)').removeAttr('src')" style="-webkit-filter:invert(100%)">VOLVER</button></li>
+			<li style="float:right"><button type="button" ng-show="images.total==1" class="luke-button fa fa-random" ng-click="images.more()" style="-webkit-filter:invert(100%);font-size: 23px;"></button></li>
+			<li style="float:right"><span ng-show="images.total>1" id="counter_full" class="luke-text-box">{{images.fullscreencount+1}} / {{images.total}}</span></li>
+		</ul>
+	</nav>
+	<div id="loading_fullimage" class="animate-show center-position" style="position:absolute;width:100%;top:50%;margin-top:-32px">
+		<span id="loader"><img class="animate-loading" ng-src="img/loading.png" style="-webkit-filter:invert(100%)"></span>
+	</div>
+</div>

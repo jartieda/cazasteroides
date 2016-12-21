@@ -1,0 +1,34 @@
+<div id="televirt" data-role="page" data-theme=''>
+    <div data-role="header" data-tap-toggle="false" data-theme='c' class="ui-header ui-bar-b">
+        <a href='#/cazast-main' data-role="none"><i id="header-menu-icon" class="fa fa-arrow-left" style="color: rgba(255,255,255,0.65);"></i></a>
+        <h1 class="header-title">Telescopio virtual</h1>
+    </div>
+    <div data-role="content">
+        <div>
+            <select class="luke-input" id="tv_method">
+                <option value="findimages">findimages</option>
+                <option value="findasteroids">findasteroids</option>
+            </select>
+            <label for="basic">Right Ascension:</label>
+            <div data-role="fieldcontain">
+            <input class="luke-input" id="tv_ra_h" type="number" name="quantity" min="0" max="24" value="5">
+            <input class="luke-input" id="tv_ra_m" type="number" name="quantity" min="0" max="60" value="3">
+            <input class="luke-input" id="tv_ra_s" type="number" name="quantity" min="0" max="60" value="35">
+          </div>
+            <label for="basic">Declination:</label>
+            <input class="luke-input" id="tv_dec_g" type="number" name="quantity" min="0" max="360" value="24">
+            <input class="luke-input" id="tv_dec_m" type="number" name="quantity" min="0" max="60" value="8">
+            <input class="luke-input" id="tv_dec_s" type="number" name="quantity" min="0" max="60" value="28">
+
+            <input class="luke-input" id="tv_radio" type="number" name="quantity" min="1" max="50000" value="10000">
+            <button class="luke-button" id="btnbuscartelescvirt" type="button" class="ui-btn">Buscar...</button>
+
+        </div>
+
+        <div id="tv_imagenes"></div>
+
+    </div>
+    <div data-role="footer" data-theme="none" data-border="false" data-inner="true">
+        <p>Cazasteroides 2016<span class="float-right">All rights reserved.</span></p>
+    </div>
+</div>

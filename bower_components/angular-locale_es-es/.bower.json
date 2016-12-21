@@ -1,0 +1,33 @@
+{
+  "name": "angular-locale_es-es",
+  "main": "angular-locale_es-es.js",
+  "authors": [
+    "Alberto Alcaraz <alberto.alcaraz@testabit.com>"
+  ],
+  "description": "es-es locale for AngularJs",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "locale"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/albertoalcaraz/angular-locale_es-es",
+  "_release": "44f99031cd",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "44f99031cda9e16ee48dc4b6ec05e55e25115ec5"
+  },
+  "_source": "https://github.com/albertoalcaraz/angular-locale_es-es.git",
+  "_target": "*",
+  "_originalSource": "angular-locale_es-es",
+  "_direct": true
+}

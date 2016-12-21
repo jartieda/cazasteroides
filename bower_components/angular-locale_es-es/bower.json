@@ -1,0 +1,23 @@
+{
+  "name": "angular-locale_es-es",
+  "main": "angular-locale_es-es.js",
+  "version": "0.0.1",
+  "authors": [
+    "Alberto Alcaraz <alberto.alcaraz@testabit.com>"
+  ],
+  "description": "es-es locale for AngularJs",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "locale"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
