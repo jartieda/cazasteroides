@@ -74,8 +74,20 @@ function initialize_images() {
           var xmax = nuevo_orig[0] + recortesizex;
           var ymax = nuevo_orig[1] + recortesizey;
           var newext = "&MAPEXT=" + nuevo_orig[0] + "%20" + nuevo_orig[1] + "%20" + xmax + "%20" + ymax;
+          //big extension shouldn't be greater than 2048 in any dir.
+          var factorx = 2
+          var big_recortex = (recortesizex*2);
+          if (big_recortex > 2048) {
+            factorx = 2048 / recortesizex;
+          }
+          var factory = 2
+          var big_recortey = (recortesizey*2);
+          if (big_recortey > 2048) {
+            factory = 2048 / recortesizey;
+          }
 
-          BIGEXTENSION = "&mapsize=" + (recortesizex*2) + "%20" + (recortesizey*2)
+          var factor = factorx < factory ? factorx: factory;
+          BIGEXTENSION = "&mapsize=" + (recortesizex*factor) + "%20" + (recortesizey*factor);
 
           JPEGN[i-1]= new Image();
           JPEGN[i-1].id = "animation";
