@@ -162,7 +162,7 @@ toolbox.controller('CazasteroidesController', function($scope, $location, Login)
         var obs = data[i];
         if (obs.image){
 
-          var html = "<tr>";
+          var html = "<tr id=row_"+obs._id+">";
           var title="";
           if (obs.image.name){
             title = obs.image.name
@@ -201,8 +201,8 @@ toolbox.controller('CazasteroidesController', function($scope, $location, Login)
           html = html + "<td>" + deg2hour(obs.Coord[0]) + "</td>"
           html = html + "<td>"+deg2degminsec(obs.Coord[1])+ "</td>";
           html = html + "<td>"+obs.image.fecha+ "</td>";
-          html = html + "<td>"+errdec + "</td>"
-          html = html + "<td>"+errar + "</td>";
+          html = html + "<td>"+errdec.toFixed(2) + "</td>"
+          html = html + "<td>"+errar.toFixed(2) + "</td>";
           html = html + "<td>"+obs.pixCoordAbs[0].toFixed(2) + "</td>"
           html = html + "<td>"+obs.pixCoordAbs[1].toFixed(2) + "</td>";
           html = html + "<td>"+(obs.revisit.length+1)+ "</td>";//FIXME NUMERO DE DETECCIONES
@@ -210,11 +210,22 @@ toolbox.controller('CazasteroidesController', function($scope, $location, Login)
           html = html + "<td>"+downvotes + "</td>";
           html = html + "<td>"+title+"</td>";
           html = html + "<td><button id=\"rev_gif_" + obs._id + "\">GIF</button><div id=\"rev_gif_div_"+obs._id+"\"> </div></td>";
+          html = html + "<td><button id=\"rev_del_" + obs._id + "\">borrar</button></td>";
           html = html + "<td><button id=\"rev_but_" + obs._id + "\">MPC</button></td>";
           html = html + "<td><div id=\"div_" + obs._id + "\"></div></td>";
 
           html = html + "</tr>";
           $("#review_detections").append(html);
+          $("#rev_del_" + obs._id).click((function() {
+            var id = obs._id;
+            return function(){
+              api.delObs(id,function(){
+                console.log("removed:"+id)
+                $("#row_"+id).hide(1000);
+                $("#row_"+id).remove();
+              })
+            }
+          })());
           $("#rev_but_" + obs._id).click((function() {
 
           })());

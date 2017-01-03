@@ -235,6 +235,38 @@ Api.prototype.getImageData = function(id_image,cb) {
         }
     }); //fin ajax
 }
+Api.prototype.delObs = function(id_obs, cb) {
+    var obs = {
+        "_id": id_obs
+    }
+    $.ajax({
+        url: this.server + '/obs/delete',
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify({"obs":obs}),
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "BEARER " + SERVER_TOKEN);
+        },
+        success: function(data) {
+            cb();
+        },
+        error: function(jqXHR) {
+            if (jqXHR.status == 401) {
+                console.log('Invalid user or password');
+                alert('Invalid User or password');
+            } else {
+                console.log('Error connecting to server');
+                alert('Error connecting to server');
+            }
+        },
+        failure: function(errMsg) {
+            console.log(errMsg);
+            alert(errMsg);
+        }
+    }); //fin ajax
+}
+
 Api.prototype.delImage = function(id_image, cb) {
     var image = {
         "_id": id_image

@@ -99,6 +99,7 @@ function initialize_images() {
             temp.id = "animation2";
             temp.alt="Responsive";
             temp.style= "width:unset;visibility: hidden;position: absolute;bottom: 0px;left: 0px ;touch-action:none;pointer-events: none;";
+            temp.setAttribute("style","width:unset;visibility: hidden;position: absolute;bottom: 0px;left: 0px ;touch-action:none;pointer-events: none;");
             temp.className  ="zoom" ;
             temp.setAttribute("data-magnify-src", MAPSERVER +
                                        SCALE + BIGEXTENSION +
